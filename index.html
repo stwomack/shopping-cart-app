@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redis Hashes</title>
+</head>
+<body>
+<h1>Redis Hashes</h1>
+<div id="app"></div>
+
+<script>
+    fetch('/')
+      .then(response => response.json())
+      .then(data => {
+        const appDiv = document.getElementById('app');
+
+        data.forEach(hash => {
+          const hashDiv = document.createElement('div');
+          hashDiv.innerHTML = `
+            <h3>Hash: ${hash.key}</h3>
+            <ul>
+              ${hash.fields.map(field => `<li>${field}</li>`).join('')}
+            </ul>
+          `;
+          appDiv.appendChild(hashDiv);
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+        appDiv.innerHTML = '<p>Error fetching hashes from Redis.</p>';
+      });
+</script>
+</body>
+</html>
